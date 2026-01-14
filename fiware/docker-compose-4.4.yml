@@ -1,6 +1,6 @@
 services:
   mongo:
-    image: mongo:6.0
+    image: mongo:4.4.30
     container_name: db-mongo
     ports:
       - 127.0.0.1:27018:27017
