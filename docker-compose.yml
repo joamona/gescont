@@ -1,0 +1,37 @@
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: db-mongo
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - fiware-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: "no"
+
+  orion:
+    image: fiware/orion:4.0.0
+    container_name: fiware-orion
+    ports:
+      - "127.0.0.1:1026:1026"
+    networks:
+      - fiware-network
+    depends_on:
+      mongo:
+        condition: service_healthy
+    command: -dbhost mongo -logLevel DEBUG
+    restart: "no"
+
+networks:
+  fiware-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
