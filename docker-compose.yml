@@ -3,7 +3,7 @@ services:
     image: mongo:6.0
     container_name: db-mongo
     ports:
-      - "127.0.0.1:27017:27017"
+      - 127.0.0.1:27017:27017
     volumes:
       - mongo-data:/data/db
     networks:
@@ -19,7 +19,7 @@ services:
     image: fiware/orion:4.0.0
     container_name: fiware-orion
     ports:
-      - "127.0.0.1:1026:1026"
+      - 127.0.0.1:1026:1026
     networks:
       - fiware-network
     depends_on:
